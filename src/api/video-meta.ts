@@ -1,6 +1,6 @@
 import { type ApiConfig } from "../config";
 import { getBearerToken, validateJWT } from "../auth";
-import { createVideo, deleteVideo, getVideo, getVideos } from "../db/videos";
+import { createVideo, deleteVideo, getVideo, getVideos, type Video } from "../db/videos";
 import { respondWithJSON } from "./json";
 import { BadRequestError, NotFoundError, UserForbiddenError } from "./errors";
 import type { BunRequest } from "bun";
@@ -63,5 +63,6 @@ export async function handlerVideosRetrieve(cfg: ApiConfig, req: Request) {
   const userID = validateJWT(token, cfg.jwtSecret);
 
   const videos = getVideos(cfg.db, userID);
+
   return respondWithJSON(200, videos);
 }
